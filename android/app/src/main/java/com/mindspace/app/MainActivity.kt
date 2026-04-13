@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -37,6 +40,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
 import com.mindspace.app.data.api.NetworkModule
 import com.mindspace.app.data.repository.SessionRepository
+import com.mindspace.app.ui.components.squishyClick
 import com.mindspace.app.ui.screens.*
 import com.mindspace.app.ui.theme.MindSpaceTheme
 import com.mindspace.app.ui.viewmodel.SessionUiState
@@ -76,6 +80,7 @@ fun MindSpaceApp() {
     val navController = rememberNavController()
     val repository = SessionRepository(NetworkModule.api)
     val viewModel: SessionViewModel = viewModel(factory = object : androidx.lifecycle.ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
         override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
             return SessionViewModel(repository) as T
         }
@@ -181,7 +186,31 @@ fun MindSpaceApp() {
                 NavHost(
                     navController = navController,
                     startDestination = Screen.Reflect.route,
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    enterTransition = { 
+                        slideInHorizontally(
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                            initialOffsetX = { it }
+                        ) + fadeIn(animationSpec = tween(300))
+                    },
+                    exitTransition = { 
+                        slideOutHorizontally(
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                            targetOffsetX = { -it }
+                        ) + fadeOut(animationSpec = tween(300))
+                    },
+                    popEnterTransition = { 
+                        slideInHorizontally(
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                            initialOffsetX = { -it }
+                        ) + fadeIn(animationSpec = tween(300))
+                    },
+                    popExitTransition = { 
+                        slideOutHorizontally(
+                            animationSpec = spring(stiffness = Spring.StiffnessLow),
+                            targetOffsetX = { it }
+                        ) + fadeOut(animationSpec = tween(300))
+                    }
                 ) {
                     composable(Screen.Reflect.route) {
                         BrainDumpScreen(
@@ -351,27 +380,16 @@ private fun TopBarBadge(
             .size(size)
             .background(backgroundColor, CircleShape)
             .then(
-                if (onClick != null) Modifier else Modifier
+                if (onClick != null) Modifier.squishyClick(onClick = onClick) else Modifier
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (onClick != null) {
-            IconButton(onClick = onClick, modifier = Modifier.size(size)) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = tint,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
-        } else {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = tint,
-                modifier = Modifier.size(18.dp)
-            )
-        }
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint,
+            modifier = Modifier.size(18.dp)
+        )
     }
 }
 
@@ -397,38 +415,95 @@ private fun HelpDialog(
 ) {
     Dialog(onDismissRequest = onDismissRequest) {
         Surface(
-            shape = RoundedCornerShape(28.dp),
+            shape = RoundedCornerShape(32.dp),
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 0.dp,
-            shadowElevation = 18.dp,
+            shadowElevation = 24.dp,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(horizontal = 22.dp, vertical = 22.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                modifier = Modifier
+                    .background(
+                        brush = androidx.compose.ui.graphics.Brush.verticalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.surface,
+                                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                            )
+                        )
+                    )
+                    .padding(28.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Black),
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = intro,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                items.forEach { item ->
+                // Header
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.Info, 
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
                     Text(
-                        text = item,
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = title,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Black),
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
-                TextButton(
-                    onClick = onDismissRequest,
-                    modifier = Modifier.align(Alignment.End)
+
+                Text(
+                    text = intro,
+                    style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 24.sp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                Surface(
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Close")
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        items.forEach { item ->
+                            Row(verticalAlignment = Alignment.Top) {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(top = 6.dp)
+                                        .size(6.dp)
+                                        .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = item,
+                                    style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 20.sp),
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                    }
+                }
+                
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+                        .squishyClick(onClick = onDismissRequest),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Got it", 
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), 
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
             }
         }

@@ -51,6 +51,7 @@ import com.mindspace.app.ui.components.MindSpaceQuotePanel
 import com.mindspace.app.ui.components.MindSpaceSectionHeader
 import com.mindspace.app.ui.components.mindSpaceCardBorderColor
 import com.mindspace.app.ui.components.mindSpaceCardColor
+import com.mindspace.app.ui.components.squishyClick
 import com.mindspace.app.ui.theme.PrimaryFixed
 import com.mindspace.app.ui.theme.SecondaryFixed
 import com.mindspace.app.ui.theme.TertiaryFixed
@@ -103,14 +104,16 @@ fun DashboardScreen(
                     modifier = Modifier.widthIn(max = 280.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
-                Button(
-                    onClick = onStartReflection,
+                Surface(
+                    color = MaterialTheme.colorScheme.primary,
+                    contentColor = Color.White,
                     shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                    shadowElevation = 8.dp,
+                    modifier = Modifier.squishyClick(onClick = onStartReflection)
                 ) {
                     Text(
                         text = "Start a Reflection",
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }

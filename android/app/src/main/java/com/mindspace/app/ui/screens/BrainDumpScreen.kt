@@ -75,6 +75,7 @@ import com.mindspace.app.audio.VoiceStreamManager
 import com.mindspace.app.ui.components.MindSpaceBackdrop
 import com.mindspace.app.ui.components.mindSpaceCardBorderColor
 import com.mindspace.app.ui.components.mindSpaceCardColor
+import com.mindspace.app.ui.components.squishyClick
 import com.mindspace.app.ui.theme.SecondaryFixed
 import kotlinx.coroutines.launch
 import java.io.File
@@ -165,14 +166,14 @@ fun BrainDumpScreen(
                 }
 
                 Surface(
-                    onClick = onCrisis,
                     color = mindSpaceCardColor(lightAlpha = 0.7f),
                     shape = CircleShape,
                     shadowElevation = 2.dp,
                     border = BorderStroke(
                         1.dp,
                         mindSpaceCardBorderColor(lightAlpha = 0.45f)
-                    )
+                    ),
+                    modifier = Modifier.squishyClick(onClick = onCrisis)
                 ) {
                     Row(
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -339,20 +340,18 @@ fun BrainDumpScreen(
         }
 
         if (textState.isNotBlank() && !isRecording) {
-            Button(
-                onClick = { onNext(textState) },
+            Surface(
+                color = MaterialTheme.colorScheme.primary,
+                contentColor = Color.White,
+                shape = CircleShape,
+                shadowElevation = 14.dp,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 112.dp)
                     .widthIn(min = 220.dp)
                     .wrapContentWidth()
-                    .height(56.dp),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
-                ),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 14.dp)
+                    .height(56.dp)
+                    .squishyClick(onClick = { onNext(textState) })
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -402,7 +401,6 @@ private fun RecordingButton(
         }
 
         Surface(
-            onClick = onClick,
             shape = CircleShape,
             color = if (isRecording) {
                 MaterialTheme.colorScheme.primary
@@ -413,7 +411,8 @@ private fun RecordingButton(
             border = if (isRecording) null else BorderStroke(
                 1.dp,
                 MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.45f)
-            )
+            ),
+            modifier = Modifier.squishyClick(onClick = onClick)
         ) {
             Icon(
                 imageVector = Icons.Default.Mic,

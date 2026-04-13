@@ -20,7 +20,8 @@ val Typography = Typography(
         fontFamily = MindSpaceFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
-        lineHeight = 36.sp
+        lineHeight = 36.sp,
+        letterSpacing = (-0.25).sp
     ),
     headlineSmall = TextStyle(
         fontFamily = MindSpaceFontFamily,
@@ -32,13 +33,15 @@ val Typography = Typography(
         fontFamily = MindSpaceFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
-        lineHeight = 28.sp
+        lineHeight = 28.sp,
+        letterSpacing = (-0.2).sp
     ),
     titleMedium = TextStyle(
         fontFamily = MindSpaceFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
-        lineHeight = 24.sp
+        lineHeight = 24.sp,
+        letterSpacing = (-0.1).sp
     ),
     bodyLarge = TextStyle(
         fontFamily = MindSpaceFontFamily,
@@ -72,13 +75,13 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.6.sp
+        letterSpacing = 1.0.sp
     ),
     labelSmall = TextStyle(
         fontFamily = MindSpaceFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
         lineHeight = 14.sp,
-        letterSpacing = 0.7.sp
+        letterSpacing = 1.2.sp
     )
 )

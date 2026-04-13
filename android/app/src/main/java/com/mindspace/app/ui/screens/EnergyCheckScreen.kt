@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.mindspace.app.ui.components.MindSpaceBackdrop
 import com.mindspace.app.ui.components.MiniAvatarStack
 import com.mindspace.app.ui.components.mindSpaceCardColor
+import com.mindspace.app.ui.components.squishyClick
 import com.mindspace.app.ui.theme.PrimaryFixed
 import com.mindspace.app.ui.theme.SecondaryFixed
 import com.mindspace.app.ui.theme.TertiaryFixed
@@ -181,18 +182,13 @@ private fun EnergyOption(
     iconTintColor: Color,
     onClick: () -> Unit
 ) {
-    var isPressed by remember { mutableStateOf(false) }
-    val rotation = if (isPressed) 10f else 0f
-
     Surface(
-        onClick = {
-            isPressed = true
-            onClick()
-        },
         shape = RoundedCornerShape(30.dp),
         color = mindSpaceCardColor(lightAlpha = 0.9f),
         shadowElevation = 10.dp,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .squishyClick(onClick = onClick)
     ) {
         androidx.compose.foundation.layout.Row(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp),
@@ -201,8 +197,7 @@ private fun EnergyOption(
             Box(
                 modifier = Modifier
                     .size(58.dp)
-                    .background(iconBgColor, RoundedCornerShape(18.dp))
-                    .rotate(rotation),
+                    .background(iconBgColor, RoundedCornerShape(18.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

@@ -1,5 +1,10 @@
 package com.mindspace.app.ui.components
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -26,6 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.graphicsLayer
 import com.mindspace.app.ui.theme.Primary
 import com.mindspace.app.ui.theme.PrimaryFixed
 import com.mindspace.app.ui.theme.SecondaryFixed
@@ -36,6 +52,26 @@ fun MindSpaceBackdrop(
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
+    val infiniteTransition = rememberInfiniteTransition(label = "backdrop")
+    val scale1 by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.15f,
+        animationSpec = infiniteRepeatable(tween(5000), RepeatMode.Reverse),
+        label = "orb1"
+    )
+    val scale2 by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.08f,
+        animationSpec = infiniteRepeatable(tween(7000), RepeatMode.Reverse),
+        label = "orb2"
+    )
+    val scale3 by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.12f,
+        animationSpec = infiniteRepeatable(tween(6000), RepeatMode.Reverse),
+        label = "orb3"
+    )
+
     Box(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
@@ -46,7 +82,8 @@ fun MindSpaceBackdrop(
             alpha = 0.35f,
             alignment = Alignment.TopStart,
             offsetX = 32.dp,
-            offsetY = 80.dp
+            offsetY = 80.dp,
+            scale = scale1
         )
         DecorativeOrb(
             color = TertiaryFixed,
@@ -54,7 +91,8 @@ fun MindSpaceBackdrop(
             alpha = 0.28f,
             alignment = Alignment.BottomEnd,
             offsetX = (-18).dp,
-            offsetY = (-90).dp
+            offsetY = (-90).dp,
+            scale = scale2
         )
         DecorativeOrb(
             color = SecondaryFixed,
@@ -62,7 +100,8 @@ fun MindSpaceBackdrop(
             alpha = 0.18f,
             alignment = Alignment.CenterEnd,
             offsetX = 54.dp,
-            offsetY = 0.dp
+            offsetY = 0.dp,
+            scale = scale3
         )
         content()
     }
@@ -207,14 +246,48 @@ private fun BoxScope.DecorativeOrb(
     alpha: Float,
     alignment: Alignment,
     offsetX: Dp,
-    offsetY: Dp
+    offsetY: Dp,
+    scale: Float = 1f
 ) {
     Box(
         modifier = Modifier
             .align(alignment)
             .offset(x = offsetX, y = offsetY)
             .size(size)
+            .scale(scale)
             .alpha(alpha)
             .background(color, CircleShape)
     )
+}
+
+fun Modifier.squishyClick(
+    interactionSource: MutableInteractionSource? = null,
+    onClick: () -> Unit
+): Modifier = composed {
+    val actualInteractionSource = interactionSource ?: remember { MutableInteractionSource() }
+    val isPressed by actualInteractionSource.collectIsPressedAsState()
+    val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
+    
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.94f else 1f,
+        animationSpec = spring(
+            dampingRatio = 0.6f, // A bit of bounce but settles softly
+            stiffness = Spring.StiffnessMediumLow
+        ),
+        label = "squishyScale"
+    )
+    
+    this
+        .graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        }
+        .clickable(
+            interactionSource = actualInteractionSource,
+            indication = null, // Disable default ripple for a cleaner squish feel
+            onClick = {
+                haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove)
+                onClick()
+            }
+        )
 }
