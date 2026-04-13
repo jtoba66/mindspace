@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSpace - Welcome</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e040a0", "primary-fixed": "#ffd6ee", "primary-fixed-dim": "#f0a0cc",
+                        "primary-container": "#f080c0", "on-primary": "#ffffff", "on-primary-container": "#2e1a28",
+                        "secondary": "#7c52aa", "secondary-fixed": "#eedcff", "secondary-container": "#eedcff",
+                        "tertiary": "#0096cc", "tertiary-fixed": "#c8eaff", "tertiary-container": "#40c0ee",
+                        "surface": "#fef7ff", "background": "#fef7ff", "on-surface": "#2e1a28",
+                        "on-surface-variant": "#604868", "on-background": "#2e1a28",
+                        "surface-container": "#f8eef8", "outline-variant": "#dcc8e0"
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                    fontFamily: { "headline": ["DM Sans"], "body": ["DM Sans"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; min-height: 100dvh; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-soft { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.15); opacity: 0.3; } }
+        .animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+        .delay-1 { animation-delay: 0.3s; opacity: 0; }
+        .delay-2 { animation-delay: 0.6s; opacity: 0; }
+        .delay-3 { animation-delay: 1s; opacity: 0; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+
+    <!-- Ambient background orbs -->
+    <div class="absolute top-[20%] left-[5%] w-72 h-72 bg-primary-fixed opacity-30 blur-[100px] rounded-full" style="animation: pulse-soft 6s ease-in-out infinite;"></div>
+    <div class="absolute bottom-[15%] right-[10%] w-64 h-64 bg-tertiary-fixed opacity-30 blur-[100px] rounded-full" style="animation: pulse-soft 8s ease-in-out infinite 2s;"></div>
+    <div class="absolute top-[50%] right-[30%] w-48 h-48 bg-secondary-fixed opacity-20 blur-[80px] rounded-full" style="animation: pulse-soft 7s ease-in-out infinite 1s;"></div>
+
+    <main class="relative z-10 flex flex-col items-center text-center px-10 max-w-sm">
+
+        <!-- Logo -->
+        <div class="mb-12 animate-fade-up">
+            <div class="w-20 h-20 bg-white rounded-full shadow-[0_8px_32px_rgba(224,64,160,0.15)] flex items-center justify-center mb-6 mx-auto">
+                <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            </div>
+            <h1 class="text-3xl font-black text-pink-500 tracking-tight">MindSpace</h1>
+        </div>
+
+        <!-- Message -->
+        <div class="space-y-4 mb-16 animate-fade-up delay-1">
+            <h2 class="text-2xl font-bold text-on-surface leading-snug">You don't need to have it together to start.</h2>
+            <p class="text-on-surface-variant font-medium leading-relaxed">Just open up. We'll help you sort through whatever's on your mind — gently, and without judgment.</p>
+        </div>
+
+        <!-- CTA -->
+        <div class="w-full space-y-4 animate-fade-up delay-2">
+            <button onclick="window.location.href='../the_brain_dump/code.html'" class="w-full bg-primary text-on-primary font-bold py-4 rounded-full shadow-[0_4px_20px_rgba(224,64,160,0.3)] hover:scale-[1.03] active:scale-[0.98] transition-all text-lg flex items-center justify-center gap-2">
+                I'm ready
+            </button>
+        </div>
+
+        <!-- Subtle reassurance -->
+        <p class="text-sm text-zinc-400 mt-12 animate-fade-up delay-3">No account needed. Your thoughts stay private.</p>
+
+    </main>
+</body>
+</html>

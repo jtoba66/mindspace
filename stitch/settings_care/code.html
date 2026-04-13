@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MindSpace Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#eedcff",
+                        "inverse-primary": "#f0a0cc",
+                        "surface": "#fef7ff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#001a33",
+                        "surface-container-low": "#fbf2fb",
+                        "on-error": "#ffffff",
+                        "secondary": "#7c52aa",
+                        "on-background": "#2e1a28",
+                        "error": "#e53e3e",
+                        "surface-tint": "#e040a0",
+                        "outline-variant": "#dcc8e0",
+                        "outline": "#907898",
+                        "on-error-container": "#9b1c1c",
+                        "inverse-on-surface": "#fef7ff",
+                        "tertiary": "#0096cc",
+                        "primary-container": "#f080c0",
+                        "tertiary-container": "#40c0ee",
+                        "surface-dim": "#e0d6e0",
+                        "on-secondary-fixed-variant": "#4a3068",
+                        "primary-fixed": "#ffd6ee",
+                        "surface-container-highest": "#ece2ec",
+                        "surface-container": "#f8eef8",
+                        "primary-fixed-dim": "#f0a0cc",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c8a8e8",
+                        "secondary-container": "#eedcff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#a02070",
+                        "on-primary-container": "#2e1a28",
+                        "error-container": "#ffe8e8",
+                        "on-secondary-container": "#2e2040",
+                        "on-primary-fixed": "#3d0028",
+                        "surface-container-high": "#f2e8f2",
+                        "tertiary-fixed-dim": "#80d0f0",
+                        "on-secondary-fixed": "#1a1030",
+                        "on-tertiary-container": "#00334d",
+                        "inverse-surface": "#2e1a28",
+                        "on-tertiary-fixed-variant": "#005580",
+                        "primary": "#e040a0",
+                        "on-surface": "#2e1a28",
+                        "surface-variant": "#f2e8f2",
+                        "on-surface-variant": "#604868",
+                        "background": "#fef7ff",
+                        "tertiary-fixed": "#c8eaff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fef7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["DM Sans"],
+                        "body": ["DM Sans"],
+                        "label": ["DM Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bouncy-spring:active { transform: scale(0.95); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-40 bg-[#fef7ff]/90 backdrop-blur-md flex justify-between items-center px-6 h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-pink-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<h1 class="text-2xl font-black text-pink-500 tracking-tight">MindSpace</h1>
+</div>
+<div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-white text-sm font-bold border-2 border-primary/30">J</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-6 max-w-2xl mx-auto">
+<header class="mb-10 text-center">
+<h2 class="text-4xl font-bold text-on-background mb-2">Settings</h2>
+<p class="text-on-surface-variant">Tailor your space for maximum peace.</p>
+</header>
+<div class="space-y-6">
+<!-- Profile Bento Section -->
+<section class="bg-surface-container-lowest p-6 rounded-lg shadow-[0_4px_16px_rgba(224,64,160,0.08)] flex items-center gap-6 border border-pink-50">
+<div class="relative">
+<img alt="User Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-fixed" data-alt="portrait of a serene smiling young woman with natural lighting and a soft pastel background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqw4oEGAZ2K114IeM3FfF1NIpxJCnqtaH8TRJN0cm4RVxkZ-m7GyfonrGwBcVRMsxWtz8JYgklzUERu6gTYq9fs0GuiaYd7e5r_WFiQU8045jW4vT4vvfUUERtJaM8MiWbM2eMBl3L6-RzKdx3vY4x0gkrwfJPtUXx_UrkooKeG2eLsNlx7Zh5-RmftqJQn4l402_bGZ4AnQ09pzU-8Y82jMlTC22aIp91m4Exw84U-YQXR4SaugH3rPMLr6uZYgGTvSaIh98FK9U"/>
+<div class="absolute bottom-0 right-0 bg-primary p-1.5 rounded-full text-white shadow-lg">
+<span class="material-symbols-outlined text-sm block" data-icon="edit">edit</span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-background">Alex Johnson</h3>
+<p class="text-on-surface-variant text-sm">Member since March 2024</p>
+</div>
+</section>
+<!-- Settings Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Account -->
+<button class="bg-white p-6 rounded-lg shadow-[0_4px_16px_rgba(224,64,160,0.05)] hover:scale-[1.02] transition-transform duration-200 text-left border border-transparent hover:border-primary-fixed group">
+<div class="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-full mb-4 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<h4 class="text-lg font-bold mb-1">Account</h4>
+<p class="text-sm text-on-surface-variant">Email, password, and subscription</p>
+</button>
+<!-- Reminders -->
+<button class="bg-white p-6 rounded-lg shadow-[0_4px_16px_rgba(224,64,160,0.05)] hover:scale-[1.02] transition-transform duration-200 text-left border border-transparent hover:border-secondary-container group">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-full mb-4 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</div>
+<h4 class="text-lg font-bold mb-1">Reminders</h4>
+<p class="text-sm text-on-surface-variant">Soft nudges for daily reflections</p>
+</button>
+<!-- Theme -->
+<button class="bg-white p-6 rounded-lg shadow-[0_4px_16px_rgba(224,64,160,0.05)] hover:scale-[1.02] transition-transform duration-200 text-left border border-transparent hover:border-tertiary-container group">
+<div class="w-12 h-12 bg-tertiary-container flex items-center justify-center rounded-full mb-4 text-white group-hover:bg-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<h4 class="text-lg font-bold mb-1">Theme</h4>
+<p class="text-sm text-on-surface-variant">Customize your pink tone &amp; dark mode</p>
+</button>
+<!-- Safe Space -->
+<button class="bg-white p-6 rounded-lg shadow-[0_4px_16px_rgba(224,64,160,0.05)] hover:scale-[1.02] transition-transform duration-200 text-left border border-transparent hover:border-error-container group">
+<div class="w-12 h-12 bg-error-container flex items-center justify-center rounded-full mb-4 text-error group-hover:bg-error group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<h4 class="text-lg font-bold mb-1">Safe Space</h4>
+<p class="text-sm text-on-surface-variant">Privacy settings and data export</p>
+</button>
+</div>
+<!-- Focus Mode Toggle (Bento Feature) -->
+<section class="bg-surface-container-high p-6 rounded-lg flex items-center justify-between border-2 border-dashed border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>
+<div>
+<h4 class="font-bold">Gentle Focus</h4>
+<p class="text-xs text-on-surface-variant">Automatically pause apps during reflection</p>
+</div>
+</div>
+<div class="w-14 h-8 bg-primary rounded-full relative p-1 cursor-pointer">
+<div class="w-6 h-6 bg-white rounded-full absolute right-1"></div>
+</div>
+</section>
+<!-- Support Section -->
+<div class="flex flex-col gap-4 mt-8">
+<button class="w-full py-4 px-8 rounded-full bg-primary text-white font-bold text-lg shadow-[0_4px_16px_rgba(224,64,160,0.2)] hover:scale-[1.03] transition-transform duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+                    Support MindSpace
+                </button>
+<button class="w-full py-4 px-8 rounded-full bg-white text-on-surface-variant font-bold border border-outline-variant hover:bg-surface-container-low transition-colors text-center">
+                    Sign Out
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 backdrop-blur-lg rounded-t-[32px] shadow-[0_-4px_20px_rgba(224,64,160,0.1)] border-t border-pink-100">
+<a class="flex flex-col items-center justify-center text-zinc-400 px-5 py-2 hover:text-pink-400 transition-colors" href="../welcome_back/code.html">
+<span class="material-symbols-outlined">self_improvement</span>
+<span class="text-xs font-medium mt-1">Reflect</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 px-5 py-2 hover:text-pink-400 transition-colors" href="../clarity_dashboard/code.html">
+<span class="material-symbols-outlined">auto_awesome_motion</span>
+<span class="text-xs font-medium mt-1">Organize</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 px-5 py-2 hover:text-pink-400 transition-colors" href="../soft_progress/code.html">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-xs font-medium mt-1">Journey</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-pink-100 text-pink-600 rounded-full px-5 py-2" href="../settings_care/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-xs font-medium mt-1">Settings</span>
+</a>
+</nav>
+</body></html>
