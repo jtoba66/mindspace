@@ -1,94 +1,35 @@
-# <img src="mindspace_logo.png" width="80" align="center" /> MindSpace: Your Premium AI Clarity Assistant
+# <img src="mindspace_logo.png" width="80" align="center" /> MindSpace: Your Sanctuary for Mental Clarity
 
-> **A high-end, meditative space designed to transform mental clutter into structured peace.**
+> **Transform mental noise into structured peace. A high-end, meditative space designed to help you find your path forward with intentional clarity.**
 
-MindSpace is a premium Android application that leverages advanced AI to help you process "brain dumps," categorize your energy levels, and generate actionable clarity plans. Built with a focus on **Calm, Fun, and Premium** design ethics, it features fluid animations, tactile micro-interactions, and a sophisticated bento-style architecture.
+MindSpace is a premium sanctuary for your thoughts. It provides a sophisticated environment to offload mental clutter, categorize your internal state, and receive a beautifully structured roadmap for your day. Built with a deep commitment to **Calm, Fun, and Premium** aesthetics, every interaction is designed to soothe the mind and spark joy.
 
 ---
 
-## ✨ Key Features
+## ✨ The Experience
 
-- **🧠 Deep Brain Dump**: Let everything out in a serene, focused interface.
-- **⚡ Energy Classification**: AI analyzes your sentiment and energy state to tailor your workspace.
-- **📊 Clarity Dashboard**: High-fidelity bento cards that organize your thoughts into "Focus," "Gentle Steps," and "Wait Until Later."
-- **🌅 Journey History**: A beautiful, scrollable story of your mental progress and energy shifts over time.
-- **🛡️ Private Mode**: Integrated privacy settings to keep your most sensitive reflections off-device and off-history.
-- **💎 Premium Bento Settings**: A sophisticated centered hero layout with high-contrast banners and tactile feedback.
+- **🧠 Deep Brain Dump**: A serene, distraction-free space to let everything out without judgment.
+- **⚡ Energy Alignment**: Automatic analysis of your mental state to tailor a workspace that meets you where you are.
+- **📊 Clarity Dashboard**: High-fidelity bento cards that transform your noise into a prioritized, actionable "Focus," "Gentle Steps," and "Wait Until Later" plan.
+- **🌅 A Living Journey**: A scrollable, visual story of your mental progress and energy shifts, helping you see how far you've come.
+- **🛡️ Intentional Privacy**: Integrated safe-space settings designed to protect your most sensitive reflections.
 
 ---
 
 ## 🎨 Design Philosophy
 
 MindSpace is built on the **"Candy" Design System**:
-- **Squishy Haptics**: Proprietary `squishyClick` interaction model using spring-based physics for deep tactile engagement.
-- **Fluid Motion**: Infinite background transition "breathing" effects and gliding navigation transitions.
-- **Editorial Typography**: Tighter tracking for headlines and wider letter-spacing for labels to achieve a high-end editorial feel.
-- **Default Dark Mode**: Optimized for low-light, meditative sessions with deep vibrant accents.
+- **Squishy Micro-interactions**: Every touch matters. We use spring-based physics for deep tactile engagement—making the digital feel physical.
+- **Fluid Ambient Motion**: "Breathing" background textures and graceful transitions ensure the experience never feels static or hurried.
+- **Editorial Aesthetic**: Tighter tracking for headlines and elegant letter-spacing for labels, creating a high-end magazine feel.
+- **Serene Dark Mode**: Optimized for mindful sessions, using deep, vibrant accents that are gentle on the eyes and the mind.
 
 ---
 
-## 🛠️ Technical Stack
+## 📜 Vision
 
-### **Frontend (Android)**
-- **Jetpack Compose**: 100% declarative UI.
-- **Spring Physics**: Custom `animateFloat`/`spring` implementations for tactile interactions.
-- **Material 3**: Utilizing the latest M3 design tokens with custom typography and color mappings.
-- **Shared Transitions**: Sophisticated animation logic between the input and dashboard states.
-
-### **Backend (Express/Node.js)**
-- **Node.js/Express**: Lightweight API handles processing logic.
-- **AI Integration**: Custom services for classifying and structuring user reflections.
+MindSpace isn't just an app; it's a commitment to your mental well-being. By focusing on structured simplicity and premium aesthetics, we aim to make the act of organization feel as therapeutic as the result.
 
 ---
 
-## 📂 Project Structure
-
-```text
-mindspace/
-├── android/          # Jetpack Compose Android Application
-│   ├── app/src/main/ # Core Kotlin source code
-│   └── ...
-├── server/           # Node.js backend services
-│   ├── services/     # AI Classification logic
-│   └── ...
-└── artifacts/        # Design mockups, PRDs, and Philosophy docs (Internal)
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- **Android Studio** (Koala or later)
-- **Node.js** (v18+)
-- **NPM** (v9+)
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/jtoba66/mindspace.git
-   cd mindspace
-   ```
-
-2. **Start the Backend**:
-   ```bash
-   cd server
-   npm install
-   npm run dev
-   ```
-
-3. **Run the Android App**:
-   - Open the `/android` folder in Android Studio.
-   - Sync Gradle.
-   - Run on a physical device or emulator (API 31+ recommended).
-
----
-
-## 📜 License
-
-Internal project for private use. See `PRODUCT_PHILOSOPHY.md` for the core vision and guiding principles of MindSpace.
-
----
-
-*Made with 💖 for mental clarity.*
+*Made with 💖 for a clearer mind.*
