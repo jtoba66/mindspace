@@ -26,7 +26,7 @@ class SessionViewModel(private val repository: SessionRepository) : ViewModel() 
 
     var currentInput: String by mutableStateOf("")
     var isPrivateMode: Boolean by mutableStateOf(false)
-    var isDarkMode: Boolean by mutableStateOf(false)
+    var isDarkMode: Boolean by mutableStateOf(true)
     var selectedEnergy: String? by mutableStateOf(null)
 
     fun submitBrainDump() {

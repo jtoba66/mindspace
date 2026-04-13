@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.DragIndicator
 import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.material.icons.filled.SelfImprovement
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.material3.Button
@@ -104,18 +105,15 @@ fun DashboardScreen(
                     modifier = Modifier.widthIn(max = 280.dp)
                 )
                 Spacer(modifier = Modifier.height(28.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White,
+                Button(
+                    onClick = onStartReflection,
                     shape = CircleShape,
-                    shadowElevation = 8.dp,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.squishyClick(onClick = onStartReflection)
                 ) {
-                    Text(
-                        text = "Start a Reflection",
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                        style = MaterialTheme.typography.labelLarge
-                    )
+                    Icon(Icons.Default.SelfImprovement, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Start Your First Reflection")
                 }
             }
         }

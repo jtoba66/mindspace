@@ -2,44 +2,20 @@ package com.mindspace.app.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -47,9 +23,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mindspace.app.ui.components.MindSpaceBackdrop
+import com.mindspace.app.ui.components.mindSpaceCardBorderColor
 import com.mindspace.app.ui.components.mindSpaceCardColor
-import com.mindspace.app.ui.theme.PrimaryFixed
+import com.mindspace.app.ui.components.squishyClick
 import com.mindspace.app.ui.theme.SecondaryFixed
+import com.mindspace.app.ui.theme.TertiaryFixed
 import com.mindspace.app.ui.viewmodel.SessionViewModel
 
 @Composable
@@ -60,105 +38,80 @@ fun SettingsScreen(viewModel: SessionViewModel) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                top = 20.dp,
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(
+                top = 24.dp,
                 bottom = 112.dp
             )
         ) {
             item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Settings",
-                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Black),
-                        color = MaterialTheme.colorScheme.onSurface
+                Text(
+                    text = "Settings",
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Black),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
+            // Section 1: Profile Hero
+            item { ProfileHeroSection() }
+
+            // Section 3: Main Settings Group
+            item {
+                SettingsGroupCard {
+                    SettingsRowItem(
+                        icon = Icons.Default.Lock,
+                        title = "Private Mode",
+                        subtitle = "Keep reflections out of your journey",
+                        trailing = {
+                            Switch(
+                                checked = viewModel.isPrivateMode,
+                                onCheckedChange = { viewModel.isPrivateMode = it },
+                                colors = settingsSwitchColors()
+                            )
+                        }
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = "Tailor your space for maximum peace.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center
+                    SettingsRowItem(
+                        icon = Icons.Default.Notifications,
+                        title = "Gentle Check Ins",
+                        subtitle = "Soft nudges for daily reflections",
+                        trailing = {
+                            Switch(
+                                checked = true,
+                                onCheckedChange = { },
+                                colors = settingsSwitchColors()
+                            )
+                        }
+                    )
+                    SettingsRowItem(
+                        icon = Icons.Default.Palette,
+                        title = "Appearance",
+                        subtitle = "Choose the theme that feels best",
+                        trailing = {
+                            Switch(
+                                checked = viewModel.isDarkMode,
+                                onCheckedChange = { viewModel.isDarkMode = it },
+                                colors = settingsSwitchColors()
+                            )
+                        }
                     )
                 }
             }
 
-            item { ProfileCard() }
+            // Section 4: Support Banner
+            item { SupportMindSpaceBanner() }
 
+            // Section 5: Misc/Danger
             item {
-                SettingsStackCard(
-                    title = "Private Mode",
-                    subtitle = "Keep reflections out of your journey and saved history.",
-                    icon = Icons.Default.Lock,
-                    iconBackground = PrimaryFixed,
-                    iconTint = MaterialTheme.colorScheme.primary,
-                    trailing = {
-                        Switch(
-                            checked = viewModel.isPrivateMode,
-                            onCheckedChange = { viewModel.isPrivateMode = it },
-                            colors = settingsSwitchColors()
-                        )
-                    }
-                )
-            }
-
-            item {
-                SettingsStackCard(
-                    title = "Gentle Check Ins",
-                    subtitle = "Soft nudges for daily reflections.",
-                    icon = Icons.Default.Notifications,
-                    iconBackground = SecondaryFixed,
-                    iconTint = MaterialTheme.colorScheme.secondary,
-                    trailing = {
-                        Switch(
-                            checked = true,
-                            onCheckedChange = { },
-                            colors = settingsSwitchColors()
-                        )
-                    }
-                )
-            }
-
-            item {
-                SettingsStackCard(
-                    title = "Appearance",
-                    subtitle = "Choose the app appearance that feels best for your space.",
-                    icon = Icons.Default.DarkMode,
-                    iconBackground = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    iconTint = MaterialTheme.colorScheme.onSurface,
-                    trailing = {
-                        Switch(
-                            checked = viewModel.isDarkMode,
-                            onCheckedChange = { viewModel.isDarkMode = it },
-                            colors = settingsSwitchColors()
-                        )
-                    }
-                )
-            }
-
-            item {
-                Button(
-                    onClick = { showDeleteDialog = true },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Icon(Icons.Default.Delete, contentDescription = null)
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = "Delete All Data",
-                        style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp)
+                SettingsGroupCard {
+                    SettingsRowItem(
+                        icon = Icons.Default.DeleteForever,
+                        title = "Delete All Data",
+                        subtitle = "Permanently remove your saved plans",
+                        iconTint = MaterialTheme.colorScheme.error,
+                        onClick = { showDeleteDialog = true }
                     )
                 }
             }
@@ -188,122 +141,221 @@ fun SettingsScreen(viewModel: SessionViewModel) {
                     Text("Cancel")
                 }
             },
-            shape = RoundedCornerShape(28.dp),
+            shape = RoundedCornerShape(32.dp),
             containerColor = Color.White
         )
     }
 }
 
 @Composable
-private fun ProfileCard() {
+private fun ProfileHeroSection() {
     Surface(
-        shape = RoundedCornerShape(28.dp),
-        color = mindSpaceCardColor(lightAlpha = 0.94f),
-        shadowElevation = 10.dp,
+        shape = RoundedCornerShape(32.dp),
+        color = mindSpaceCardColor(lightAlpha = 0.96f),
+        shadowElevation = 4.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box {
                 Box(
                     modifier = Modifier
-                        .size(64.dp)
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.16f), CircleShape),
+                        .size(100.dp)
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape)
+                        .border(4.dp, Color.White, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(50.dp)
                     )
                 }
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .size(24.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape),
-                    contentAlignment = Alignment.Center
+                Surface(
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.align(Alignment.BottomEnd).size(32.dp),
+                    shadowElevation = 4.dp
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(12.dp)
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+                        Text("G", color = Color.White, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.width(14.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Column {
-                Text(
-                    text = "Alex Johnson",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.onSurface
+            Text(
+                text = "ALEX JOHNSON",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.ExtraBold,
+                    letterSpacing = 1.2.sp
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                text = "alex.johnson@example.com",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Text(
+                text = "Member since March 2024",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+    }
+}
+
+@Composable
+private fun GoalSectionLayout() {
+    Surface(
+        shape = RoundedCornerShape(24.dp),
+        color = mindSpaceCardColor(lightAlpha = 0.6f),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(vertical = 16.dp)) {
+            Row(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Adjust,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(20.dp)
                 )
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Member since March 2024",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = "My focus",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                listOf("Mental Clarity", "Daily Peace", "Self Growth", "Quiet Mind").forEachIndexed { index, title ->
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (index == 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                        contentColor = if (index == 0) Color.White else MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.squishyClick { }
+                    ) {
+                        Text(
+                            text = title,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun SettingsStackCard(
-    title: String,
-    subtitle: String,
-    icon: ImageVector,
-    iconBackground: Color,
-    iconTint: Color,
-    trailing: @Composable (() -> Unit)? = null
-) {
+private fun SettingsGroupCard(content: @Composable ColumnScope.() -> Unit) {
     Surface(
-        shape = RoundedCornerShape(28.dp),
+        shape = RoundedCornerShape(24.dp),
         color = mindSpaceCardColor(lightAlpha = 0.94f),
-        shadowElevation = 8.dp,
+        shadowElevation = 2.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 20.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(vertical = 8.dp),
+            content = content
+        )
+    }
+}
+
+@Composable
+private fun SettingsRowItem(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    iconTint: Color = MaterialTheme.colorScheme.primary,
+    trailing: @Composable (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
+) {
+    val modifier = if (onClick != null) Modifier.squishyClick(onClick = onClick) else Modifier
+    
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = iconTint,
+            modifier = Modifier.size(22.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        if (trailing != null) {
+            trailing()
+        } else if (onClick != null) {
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.outlineVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun SupportMindSpaceBanner() {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth().height(72.dp),
+        shadowElevation = 6.dp
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFFE040A0), // Primary
+                            Color(0xFFFF80AB)  // Lighter pink
+                        )
+                    )
+                )
         ) {
-            Box(
-                modifier = Modifier
-                    .size(46.dp)
-                    .background(iconBackground, CircleShape),
-                contentAlignment = Alignment.Center
+            Row(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = iconTint,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-            Spacer(modifier = Modifier.width(14.dp))
-            Column(modifier = Modifier.weight(1f)) {
+                Icon(Icons.Default.Diamond, contentDescription = null, tint = Color.White)
+                Spacer(modifier = Modifier.width(12.dp))
                 Text(
-                    text = title,
+                    text = "Support MindSpace",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = Color.White
                 )
-                Spacer(modifier = Modifier.height(3.dp))
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            if (trailing != null) {
-                Spacer(modifier = Modifier.width(10.dp))
-                trailing()
             }
         }
     }
